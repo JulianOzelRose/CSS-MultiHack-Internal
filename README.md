@@ -13,9 +13,9 @@ To download this hack, navigate to the [build](https://github.com/JulianOzelRose
 folder, then download ```CSS-MultiHack-Internal.dll```. You will then need to use a DLL injector.
 I recommend using [this one](https://guidedhacking.com/resources/guided-hacking-dll-injector.4/).
 Once you have the injector, select the process for Counter-Strike: Source, then open the DLL,
-then press inject. The multihack should then be running. To hide the menu, press the ```INSERT``` Key.
-To unload the hack, press the ```END``` key on your numpad. From the menu, you can toggle the
-different features on or off. To run the aimbot, press the ```V``` key.
+then press inject. The multihack should then be running. From the menu, you can toggle the different
+features on or off. To run the aimbot, press the ```V``` key. To hide the menu, press the ```INSERT``` Key.
+To unload the hack, press the ```END``` key on your numpad.
 
 ## Warning
 This program reads and modifies memory internally. If you use it on a VAC-secured server,
@@ -168,7 +168,7 @@ for this trainer. Note that the offsets for ```CBaseEntity``` are located on ```
 
 ## Sources
 I used the following sources to guide me through the creation of this trainer. The
-tutorials for setting up ImGui and getting the aimbot working were instrumental. I recommend
+tutorials for hooking DirectX and getting the aimbot working were instrumental. I recommend
 checking them out for more in-depth explanations of the processes involved.
 - [Guided Hacking - C++ Aimbot Tutorial](https://www.youtube.com/playlist?list=PLt9cUwGw6CYFgcPd7040cBPCq24maby8_)
-- [cazz - ImGui Internal DirectX 9 Hook (1/2)](https://www.youtube.com/watch?v=vF5fzIDUJVw)
+- [cazz - ImGui Internal DirectX 9 Hook](https://www.youtube.com/watch?v=vF5fzIDUJVw)
