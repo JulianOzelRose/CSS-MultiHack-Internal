@@ -24,6 +24,10 @@ game's launch options. You can find this menu by right-clicking on your game fro
 then going to Properties. You can then safely play against bots without worrying
 about catching a VAC ban.
 
+## Demonstration
+https://github.com/JulianOzelRose/CSS-MultiHack-Internal/assets/95890436/f529d864-73bc-4268-b389-894f0cfd61ab
+
+
 ## Bunnyhop
 The bunnyhop hack is relatively straightforward. It works by checking for ground flags. If the player
 is on the ground or crouching, it forces a jump by setting ```m_dwForceJump``` to 6. When in the air,
@@ -140,14 +144,6 @@ is possible to configure [hazedumper](https://github.com/frk1/hazedumper) with C
 offset signatures and get it to dump offsets that way. Below are the offsets I used
 for this trainer. Note that the offsets for ```CBaseEntity``` are located on ```client.dll```.
 
-###                client.dll                            ###
-| Offset          | Type            | Variable             |
-| --------------- | --------------- | -------------------- |
-| 0x47C33C        | Float           | m_angRotation        |
-| 0x4C88E8        | Pointer         | m_dwLocalPlayer      |
-| 0x4F5D24        | DWORD           | m_dwForceJump        |
-| 0x4F5D30        | DWORD           | m_dwForceAttack      |
-
 ###               CBasePlayer                            ###
 | Offset          | Type            | Variable             |
 | --------------- | --------------- | -------------------- |
@@ -160,6 +156,13 @@ for this trainer. Note that the offsets for ```CBaseEntity``` are located on ```
 | 0x144C          | Float           | m_flFlashMaxAlpha    |
 | 0x1450          | Float           | m_flFlashMaxDuration |
 
+###                client.dll                            ###
+| Offset          | Type            | Variable             |
+| --------------- | --------------- | -------------------- |
+| 0x47C33C        | Float           | m_angRotation        |
+| 0x4C88E8        | Pointer         | m_dwLocalPlayer      |
+| 0x4F5D24        | DWORD           | m_dwForceJump        |
+| 0x4F5D30        | DWORD           | m_dwForceAttack      |
 
 ###               engine.dll                             ###
 | Offset          | Type            | Variable             |
