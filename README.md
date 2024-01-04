@@ -25,7 +25,7 @@ then going to Properties. You can then safely play against bots without worrying
 about catching a VAC ban.
 
 ## Demonstration
-https://github.com/JulianOzelRose/CSS-MultiHack-Internal/assets/95890436/f529d864-73bc-4268-b389-894f0cfd61ab
+https://github.com/JulianOzelRose/CSS-MultiHack-Internal/assets/95890436/4f6940c2-bb24-451f-8c8a-2f06362440b4
 
 
 ## Bunnyhop
@@ -112,12 +112,11 @@ void Triggerbot(uintptr_t client, uintptr_t localPlayer)
 ```
 
 ## Aimbot
-Credit goes to [Guided Hacking](https://guidedhacking.com/) for the aimbot formula.
-The aimbot works by iterating through the entity list. Each entity is 0x10 bytes apart,
+The aimbot works by first iterating through the entity list. Each entity is 0x10 bytes apart,
 so you must use 0x10 as the iterator. Then, the aimbot checks to ensure that the entity
 is on the opposing team and is alive. Lastly, it performs calculations using trigonometry
-to get the ideal angles, and updates the view angles, ```m_angRotation```, to focus on the
-enemy's head.
+to get the ideal angles, and updates the player's view angles, ```m_angRotation```, to focus on the
+closest enemy's head. Credit goes to [Guided Hacking](https://guidedhacking.com/) for the aimbot formula.
 ```
 void CalcAngle(float* src, float* dst, float* angles)
 {
