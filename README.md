@@ -50,8 +50,8 @@ void Bunnyhop(uintptr_t client, uintptr_t localPlayer)
 
 ## Anti-flash
 For anti-flash, there are 2 relevant variables to be changed; ```m_flFlashMaxAlpha```
-determines how bright the flashbang's blinding effect is. ```m_flFlashMaxDuration``` determines
-how long the flashbang's effect lasts. Setting either one to 0 will nullify the flashbang's effect.
+determines how bright the flashbang's blinding effect is, and ```m_flFlashMaxDuration``` determines
+how long the flashbang's effect lasts. Setting them to 0 will nullify the flashbang's blinding effect.
 
 ```
 void AntiFlash(uintptr_t localPlayer)
@@ -59,14 +59,14 @@ void AntiFlash(uintptr_t localPlayer)
 	float flashMaxAlpha = *reinterpret_cast<float*>(localPlayer + offset::m_flFlashMaxAlpha);
 	float flashMaxDuration = *reinterpret_cast<float*>(localPlayer + offset::m_flFlashMaxDuration);
 
-	if (flashMaxAlpha > 0.0)
+	if (flashMaxAlpha > 0.0f)
 	{
-		*reinterpret_cast<float*>(localPlayer + offset::m_flFlashMaxAlpha) = 0;
+		*reinterpret_cast<float*>(localPlayer + offset::m_flFlashMaxAlpha) = 0.0f;
 	}
 
-	if (flashMaxDuration > 0.0)
+	if (flashMaxDuration > 0.0f)
 	{
-		*reinterpret_cast<float*>(localPlayer + offset::m_flFlashMaxDuration) = 0;
+		*reinterpret_cast<float*>(localPlayer + offset::m_flFlashMaxDuration) = 0.0f;
 	}
 }
 ```
@@ -75,8 +75,8 @@ void AntiFlash(uintptr_t localPlayer)
 The triggerbot uses ```m_iCrosshairId``` to determine what entity is in the player's
 crosshairs. A value of 0 means no entity. A non-zero value could mean another player,
 or it could mean a barrel. To prevent the triggerbot from firing at barrels, the
-```crosshairId``` condition should be capped at 64. Once an entity is detected in the
-crosshairs, a check is performed to make sure the entity is on the opposing team.
+crosshair ID condition should be capped at 64. Once an entity is detected in the
+crosshairs, a check is performed to ensure the entity is on the opposing team.
 Then, an attack is forced by setting ```m_dwForceAttack``` to 5. After a delay, this
 variable needs to be set back to its default value of 4, or only 1 shot will be fired.
 ```
