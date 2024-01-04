@@ -10,14 +10,14 @@ namespace antiflash
 		float flashMaxAlpha = *reinterpret_cast<float*>(localPlayer + offset::m_flFlashMaxAlpha);
 		float flashMaxDuration = *reinterpret_cast<float*>(localPlayer + offset::m_flFlashMaxDuration);
 
-		if (flashMaxAlpha > 0.0)
+		if (flashMaxAlpha > 0.0f)
 		{
-			*reinterpret_cast<float*>(localPlayer + offset::m_flFlashMaxAlpha) = 0;
+			*reinterpret_cast<float*>(localPlayer + offset::m_flFlashMaxAlpha) = 0.0f;
 		}
 
-		if (flashMaxDuration > 0.0)
+		if (flashMaxDuration > 0.0f)
 		{
-			*reinterpret_cast<float*>(localPlayer + offset::m_flFlashMaxDuration) = 0;
+			*reinterpret_cast<float*>(localPlayer + offset::m_flFlashMaxDuration) = 0.0f;
 		}
 	}
 }
