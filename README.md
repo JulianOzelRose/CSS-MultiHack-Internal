@@ -1,8 +1,8 @@
 # Counter-Strike: Source - Internal Multihack
 This is a simple multihack for Counter-Strike: Source. Its features include
 aimbot, triggerbot, anti-flash, and bunnyhop hack. It is an internal hack,
-so you will need a DLL injector. For more details on installation and use,
-scroll down to the installation and use section. Later on this README are some
+so you will need to use a DLL injector. For more details on installation and use,
+scroll down to the section below. Later on this README are some
 details about reversing the game as well as offset tables.
 
 ![MultiHack-Menu](https://github.com/JulianOzelRose/CSS-MultiHack-Internal/assets/95890436/4e31f08a-dab9-4977-b2ff-b7e8396da1eb)
@@ -29,7 +29,7 @@ https://github.com/JulianOzelRose/CSS-MultiHack-Internal/assets/95890436/4f6940c
 
 
 ## Bunnyhop
-The bunnyhop hack is relatively straightforward. It works by checking for ground flags. If the player
+The bunnyhop hack is relatively straightforward. It works by first checking for ground flags. If the player
 is on the ground or crouching, it forces a jump by setting ```m_dwForceJump``` to 6. When in the air,
 the force jump variable resets. The result is perfectly timed jumps every time.
 
@@ -75,10 +75,10 @@ void AntiFlash(uintptr_t localPlayer)
 The triggerbot uses ```m_iCrosshairId``` to determine what entity is in the player's
 crosshairs. A value of 0 means no entity. A non-zero value could mean another player,
 or it could mean a barrel. To prevent the triggerbot from firing at barrels, the
-crosshair ID condition should be capped at 64. Once an entity is detected in the
-crosshairs, a check is performed to ensure the entity is on the opposing team.
-Then, an attack is forced by setting ```m_dwForceAttack``` to 5. After a delay, this
-variable needs to be set back to its default value of 4, or only 1 shot will be fired.
+crosshair ID condition should be capped at 64. Once an entity is detected in the crosshairs,
+a check is performed to ensure the entity is on the opposing team. Then, an attack is forced
+by setting ```m_dwForceAttack``` to 5. After a delay, this variable needs to be set back to
+its default value of 4, or only 1 shot will be fired.
 ```
 void Triggerbot(uintptr_t client, uintptr_t localPlayer)
 {
@@ -121,8 +121,8 @@ closest enemy's head. Credit goes to [Guided Hacking](https://guidedhacking.com/
 void CalcAngle(float* src, float* dst, float* angles)
 {
 	float delta[3] = { static_cast<float>(src[0] - dst[0]),
-					   static_cast<float>(src[1] - dst[1]),
-					   static_cast<float>(src[2] - dst[2]) };
+                           static_cast<float>(src[1] - dst[1]),
+                           static_cast<float>(src[2] - dst[2]) };
 
 	float hyp = sqrt(delta[0] * delta[0] + delta[1] * delta[1]);
 
@@ -138,7 +138,7 @@ void CalcAngle(float* src, float* dst, float* angles)
 ```
 
 ## Offset tables
-Unfortunately there is no offset dumper for CS:S that I am aware of. However, it
+Unfortunately, there is no offset dumper for CS:S that I am aware of. However, it
 is possible to configure [hazedumper](https://github.com/frk1/hazedumper) with CS:S
 offset signatures and get it to dump offsets that way. Below are the offsets I used
 for this trainer. Note that the offsets for ```CBaseEntity``` are located on ```client.dll```.
