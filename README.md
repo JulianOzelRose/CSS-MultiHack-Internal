@@ -150,15 +150,15 @@ for this trainer. Note that the offsets for ```CBaseEntity``` are located on ```
 | 0x009C          | Integer         | m_iTeamNum           |
 | 0x0290          | Float           | m_vecOrigin          |
 | 0x0350          | Float           | m_fFlags             |
-| 0x0D80          | Pointer         | m_hActiveWeapon      |
+| 0x0D80          | Integer         | m_hActiveWeapon      |
 | 0x0E48          | Float           | m_vecPunchAngle      |
 | 0x144C          | Float           | m_flFlashMaxAlpha    |
 | 0x1450          | Float           | m_flFlashMaxDuration |
+| 0x14F0	  | Integer	    | m_iCrosshairId	   |
 
 ###                client.dll                            ###
 | Offset          | Type            | Variable             |
 | --------------- | --------------- | -------------------- |
-| 0x47C33C        | Float           | m_angRotation        |
 | 0x4C88E8        | Pointer         | m_dwLocalPlayer      |
 | 0x4F5D24        | DWORD           | m_dwForceJump        |
 | 0x4F5D30        | DWORD           | m_dwForceAttack      |
@@ -166,6 +166,7 @@ for this trainer. Note that the offsets for ```CBaseEntity``` are located on ```
 ###               engine.dll                             ###
 | Offset          | Type            | Variable             |
 | --------------- | --------------- | -------------------- |
+| 0x47C33C        | Float           | m_angRotation        |
 | 0x5EC82C        | Integer         | m_iNumPlayers        |
 
 ## Sources
