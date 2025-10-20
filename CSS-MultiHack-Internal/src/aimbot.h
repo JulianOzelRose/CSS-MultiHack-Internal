@@ -64,7 +64,7 @@ namespace aimbot
 
 		void ReadInformation(uintptr_t client, int index)
 		{
-			CBaseEntity = *reinterpret_cast<std::uintptr_t*>(client + (offset::m_dwEntityList + index * 0x10));
+			CBaseEntity = *reinterpret_cast<std::uintptr_t*>(client + (offset::m_dwEntityList + index * 0x20));
 
 			if (CBaseEntity)
 			{

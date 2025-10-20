@@ -10,7 +10,7 @@ namespace triggerbot
 
 		if (crosshairId != 0 && crosshairId <= 64)
 		{
-			uintptr_t targetEntity = *reinterpret_cast<std::uintptr_t*>(client + (offset::m_dwEntityList + (crosshairId - 1) * 0x10));
+			uintptr_t targetEntity = *reinterpret_cast<std::uintptr_t*>(client + (offset::m_dwEntityList + (crosshairId - 1) * 0x20));
 
 			if (targetEntity)
 			{
