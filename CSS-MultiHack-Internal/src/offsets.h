@@ -18,6 +18,5 @@ namespace offset
 	constexpr std::ptrdiff_t m_fFlags = 0x440;
 	constexpr std::ptrdiff_t m_iCrosshairId = 0x1B20;
 	//constexpr std::ptrdiff_t m_hActiveWeapon = 0xD80;		// Need to find new offset for x64
-	constexpr std::ptrdiff_t m_flFlashMaxAlpha = 0x144C;	// Need to find new offset for x64
-	constexpr std::ptrdiff_t m_flFlashMaxDuration = 0x1450;	// Need to find new offset for x64
+	constexpr std::ptrdiff_t m_flFlashMaxAlpha = 0x1A54;
 }
