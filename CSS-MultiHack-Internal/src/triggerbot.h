@@ -26,7 +26,7 @@ namespace triggerbot
 
 			if (playerTeam != targetTeam)
 			{
-				int attackFlag = *reinterpret_cast<uint32_t*>(client + offset::m_dwForceAttack);
+				uint32_t attackFlag = *reinterpret_cast<uint32_t*>(client + offset::m_dwForceAttack);
 
 				if (attackFlag == ATTACK_RELEASE)
 				{
