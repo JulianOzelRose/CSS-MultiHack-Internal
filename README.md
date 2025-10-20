@@ -10,16 +10,16 @@ details about reversing the game as well as offset tables.
 
 ## Installation and use
 To download this hack, navigate to the [build](https://github.com/JulianOzelRose/CSS-MultiHack-Internal/tree/master/CSS-MultiHack-Internal/build)
-folder, then download ```CSS-MultiHack-Internal.dll```. You will then need to use a DLL injector.
+folder, then download `CSS-MultiHack-Internal.dll`. You will then need to use a DLL injector.
 I recommend using [this one](https://guidedhacking.com/resources/guided-hacking-dll-injector.4/).
 Once you have the injector, select the process for Counter-Strike: Source, then open the DLL,
 then press inject. The multihack should then be running. From the menu, you can toggle the different
-features on or off. To run the aimbot, press the ```V``` key. To hide the menu, press the ```INSERT``` Key.
-To unload the hack, press the ```END``` key on your numpad.
+features on or off. To run the aimbot, press the `V` key. To hide the menu, press the `INSERT` Key.
+To unload the hack, press the `END` key on your numpad.
 
 ## Warning
 This program reads and modifies memory internally. If you use it on a VAC-secured server,
-you will be banned. To prevent this, be sure to add the ```-insecure``` flag to your
+you will be banned. To prevent this, be sure to add the `-insecure` flag to your
 game's launch options. You can find this menu by right-clicking on your game from Steam,
 then going to Properties. You can then safely play against bots without worrying
 about catching a VAC ban.
@@ -30,81 +30,84 @@ https://github.com/JulianOzelRose/CSS-MultiHack-Internal/assets/95890436/4f6940c
 
 ## Bunnyhop
 The bunnyhop hack is relatively straightforward. It works by first checking for ground flags. If the player
-is on the ground or crouching, it forces a jump by setting ```m_dwForceJump``` to 6. When in the air,
+is on the ground or crouching, it forces a jump by setting `m_dwForceJump` to 6. When in the air,
 the force jump variable resets. The result is perfectly timed jumps every time.
 
 ```
+const int FLAG_STANDING = 257;
+const int FLAG_ONGROUND = 263;
+const int JUMP_PRESS = 6;
+
 void Bunnyhop(uintptr_t client, uintptr_t localPlayer)
 {
 	if (GetAsyncKeyState(VK_SPACE))
 	{
 		int flag = *reinterpret_cast<std::uint32_t*>(localPlayer + offset::m_fFlags);
 
-		if (flag == 257 || flag == 263)
+		if (flag == FLAG_STANDING || flag == FLAG_ONGROUND)
 		{
-			*reinterpret_cast<uint32_t*>(client + offset::m_dwForceJump) = 6;
+			*reinterpret_cast<uint32_t*>(client + offset::m_dwForceJump) = JUMP_PRESS;
 		}
 	}
 }
 ```
 
 ## Anti-flash
-For anti-flash, there are 2 relevant variables to be changed; ```m_flFlashMaxAlpha```
-determines how bright the flashbang's blinding effect is, and ```m_flFlashMaxDuration``` determines
-how long the flashbang's effect lasts. Setting them to 0 will nullify the flashbang's blinding effect.
-
+For anti-flash, there are 2 relevant variables; `m_flFlashMaxAlpha`
+determines how bright the flashbang's blinding effect is, and `m_flFlashMaxDuration` determines
+how long the flashbang's effect lasts. Just setting `m_flFlashMaxAlpha` to 0 is sufficient to nullify the flashbang's blinding effect.
 ```
 void AntiFlash(uintptr_t localPlayer)
 {
 	float flashMaxAlpha = *reinterpret_cast<float*>(localPlayer + offset::m_flFlashMaxAlpha);
-	float flashMaxDuration = *reinterpret_cast<float*>(localPlayer + offset::m_flFlashMaxDuration);
 
 	if (flashMaxAlpha > 0.0f)
 	{
 		*reinterpret_cast<float*>(localPlayer + offset::m_flFlashMaxAlpha) = 0.0f;
 	}
-
-	if (flashMaxDuration > 0.0f)
-	{
-		*reinterpret_cast<float*>(localPlayer + offset::m_flFlashMaxDuration) = 0.0f;
-	}
 }
 ```
 
 ## Triggerbot
-The triggerbot uses ```m_iCrosshairId``` to determine what entity is in the player's
+The triggerbot uses `m_iCrosshairId` to determine what entity is in the player's
 crosshairs. A value of 0 means no entity. A non-zero value could mean another player,
-or it could mean a barrel. To prevent the triggerbot from firing at barrels, the
+or it could mean a physics object. To prevent the triggerbot from firing at physics objects, the
 crosshair ID condition should be capped at 64. Once an entity is detected in the crosshairs,
 a check is performed to ensure the entity is on the opposing team. Then, an attack is forced
-by setting ```m_dwForceAttack``` to 5. After a delay, this variable needs to be set back to
+by setting `m_dwForceAttack` to 5. After a delay, this variable needs to be set back to
 its default value of 4, or only 1 shot will be fired.
 ```
+const int MAX_PLAYERS = 64;
+const int ATTACK_PRESS = 5;
+const int ATTACK_RELEASE = 4;
+
 void Triggerbot(uintptr_t client, uintptr_t localPlayer)
 {
-	int crosshairId = *reinterpret_cast<uint32_t*>(localPlayer + offset::m_iCrosshairId);
+	uint32_t crosshairId = *reinterpret_cast<uint32_t*>(localPlayer + offset::m_iCrosshairId);
 
-	if (crosshairId != 0 && crosshairId <= 64)
+	if (crosshairId == 0 || crosshairId > MAX_PLAYERS)
 	{
-		uintptr_t targetEntity = *reinterpret_cast<std::uintptr_t*>(client + (offset::m_dwEntityList + (crosshairId - 1) * 0x10));
+		return;
+	}
 
-		if (targetEntity)
+	uintptr_t targetEntity = *reinterpret_cast<std::uintptr_t*>(client + (offset::m_dwEntityList + (crosshairId - 1) * 0x20));
+
+	if (targetEntity)
+	{
+		uint32_t targetTeam = *reinterpret_cast<uint32_t*>(targetEntity + offset::m_iTeamNum);
+		uint32_t playerTeam = *reinterpret_cast<uint32_t*>(localPlayer + offset::m_iTeamNum);
+
+		if (playerTeam != targetTeam)
 		{
-			int targetTeam = *reinterpret_cast<uint32_t*>(targetEntity + offset::m_iTeamNum);
-			int playerTeam = *reinterpret_cast<uint32_t*>(localPlayer + offset::m_iTeamNum);
+			uint32_t attackFlag = *reinterpret_cast<uint32_t*>(client + offset::m_dwForceAttack);
 
-			if (playerTeam != targetTeam)
+			if (attackFlag == ATTACK_RELEASE)
 			{
-				int attackFlag = *reinterpret_cast<uint32_t*>(client + offset::m_dwForceAttack);
+				*reinterpret_cast<uint32_t*>(client + offset::m_dwForceAttack) = ATTACK_PRESS;
+				std::this_thread::sleep_for(std::chrono::milliseconds(1));
 
-				if (attackFlag == 4)
-				{
-					*reinterpret_cast<uint32_t*>(client + offset::m_dwForceAttack) = 5;
-					std::this_thread::sleep_for(std::chrono::milliseconds(1));
-
-					*reinterpret_cast<uint32_t*>(client + offset::m_dwForceAttack) = 4;
-					std::this_thread::sleep_for(std::chrono::milliseconds(1));
-				}
+				*reinterpret_cast<uint32_t*>(client + offset::m_dwForceAttack) = ATTACK_RELEASE;
+				std::this_thread::sleep_for(std::chrono::milliseconds(1));
 			}
 		}
 	}
@@ -112,10 +115,10 @@ void Triggerbot(uintptr_t client, uintptr_t localPlayer)
 ```
 
 ## Aimbot
-The aimbot works by first iterating through the entity list. Each entity is 0x10 bytes apart,
-so you must use 0x10 as the iterator. Then, the aimbot checks to ensure that the entity
+The aimbot works by first iterating through the entity list. Each entity is 0x20 bytes apart,
+so you must use 0x20 as the iterator. Then, the aimbot checks to ensure that the entity
 is on the opposing team and is alive. Lastly, it performs calculations using trigonometry
-to get the ideal angles, and updates the player's view angles, ```m_angRotation```, to focus on the
+to get the ideal angles, and updates the player's view angles, `m_angRotation`, to focus on the
 closest enemy's head. Credit goes to [Guided Hacking](https://guidedhacking.com/) for the aimbot formula.
 ```
 void CalcAngle(float* src, float* dst, float* angles)
@@ -141,33 +144,32 @@ void CalcAngle(float* src, float* dst, float* angles)
 Unfortunately, there is no offset dumper for CS:S that I am aware of. However, it
 is possible to configure [hazedumper](https://github.com/frk1/hazedumper) with CS:S
 offset signatures and get it to dump offsets that way. Below are the offsets I used
-for this trainer. Note that the offsets for ```CBaseEntity``` are located on ```client.dll```.
+for this trainer. Note that the offsets for `CBasePlayer` are located on `client.dll`.
 
 ###               CBasePlayer                            ###
 | Offset          | Type            | Variable             |
 | --------------- | --------------- | -------------------- |
-| 0x0094          | Integer         | m_iHealth            |
-| 0x009C          | Integer         | m_iTeamNum           |
-| 0x0290          | Float           | m_vecOrigin          |
-| 0x0350          | Float           | m_fFlags             |
-| 0x0D80          | Integer         | m_hActiveWeapon      |
-| 0x0E48          | Float           | m_vecPunchAngle      |
-| 0x144C          | Float           | m_flFlashMaxAlpha    |
-| 0x1450          | Float           | m_flFlashMaxDuration |
-| 0x14F0	  | Integer	    | m_iCrosshairId	   |
+| 0x00D0          | Int32           | m_iHealth            |
+| 0x00D8          | Int32           | m_iTeamNum           |
+| 0x0320          | Float32         | m_vecOrigin          |
+| 0x0440          | Float32         | m_fFlags             |
+| 0x1A54          | Float32         | m_flFlashMaxAlpha    |
+| 0x1A4C          | Float32         | m_flFlashMaxDuration |
+| 0x1B20	      | Int32	        | m_iCrosshairId	   |
 
 ###                client.dll                            ###
 | Offset          | Type            | Variable             |
 | --------------- | --------------- | -------------------- |
-| 0x4C88E8        | Pointer         | m_dwLocalPlayer      |
-| 0x4F5D24        | DWORD           | m_dwForceJump        |
-| 0x4F5D30        | DWORD           | m_dwForceAttack      |
+| 0x5F4B68        | Pointer         | m_dwLocalPlayer      |
+| 0x6098C8        | Pointer         | m_dwEntityList       |
+| 0x677300        | DWORD           | m_dwForceJump        |
+| 0x677310        | DWORD           | m_dwForceAttack      |
 
 ###               engine.dll                             ###
 | Offset          | Type            | Variable             |
 | --------------- | --------------- | -------------------- |
-| 0x47C33C        | Float           | m_angRotation        |
-| 0x5EC82C        | Integer         | m_iNumPlayers        |
+| 0x53E4E4        | Float32         | m_angRotation        |
+| 0x6DA960        | Int32           | m_iNumPlayers        |
 
 ## Sources
 I used the following sources to guide me through the creation of this trainer. The
