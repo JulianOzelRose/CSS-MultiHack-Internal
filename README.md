@@ -9,11 +9,11 @@ details about reversing the game as well as offset tables.
 
 
 ## Installation and use
-To download this hack, navigate to the [build](https://github.com/JulianOzelRose/CSS-MultiHack-Internal/tree/master/CSS-MultiHack-Internal/build)
-folder, then download `CSS-MultiHack-Internal.dll`. You will then need to use a DLL injector.
+To download this hack, navigate to the [Releases](https://github.com/JulianOzelRose/CSS-MultiHack-Internal/releases)
+page, then download the latest version of the DLL. You will then need to use a DLL injector.
 I recommend using [this one](https://guidedhacking.com/resources/guided-hacking-dll-injector.4/).
-Once you have the injector, select the process for Counter-Strike: Source, then open the DLL,
-then press inject. The multihack should then be running. From the menu, you can toggle the different
+Once you have the injector running, select the process for Counter-Strike: Source (`cstrike_win64.exe`). Then open and select the DLL,
+then press `Inject`. The multihack should then be running with the menu visible. From the menu, you can toggle the different
 features on or off. To run the aimbot, press the `V` key. To hide the menu, press the `INSERT` Key.
 To unload the hack, press the `END` key on your numpad.
 
