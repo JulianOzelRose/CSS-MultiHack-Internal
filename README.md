@@ -152,7 +152,7 @@ for this trainer. Note that the offsets for `CBasePlayer` are located on `client
 | 0x00D0          | Int32           | m_iHealth            |
 | 0x00D8          | Int32           | m_iTeamNum           |
 | 0x0320          | Float32[3]      | m_vecOrigin          |
-| 0x0440          | Float32         | m_fFlags             |
+| 0x0440          | Int32           | m_fFlags             |
 | 0x127C          | Float32[3]      | m_vecPunchAngle      |
 | 0x1A54          | Float32         | m_flFlashMaxAlpha    |
 | 0x1A4C          | Float32         | m_flFlashMaxDuration |
@@ -169,7 +169,7 @@ for this trainer. Note that the offsets for `CBasePlayer` are located on `client
 ###               engine.dll                             ###
 | Offset          | Type            | Variable             |
 | --------------- | --------------- | -------------------- |
-| 0x53E4E4        | Float32         | m_angRotation        |
+| 0x53E4E4        | Float32[3]      | m_angRotation        |
 | 0x6DA960        | Int32           | m_iNumPlayers        |
 
 ## Sources
