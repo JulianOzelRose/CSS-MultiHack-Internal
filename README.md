@@ -34,15 +34,15 @@ is on the ground or crouching, it forces a jump by setting `m_dwForceJump` to 6.
 the force jump variable resets. The result is perfectly timed jumps every time.
 
 ```
-const int FLAG_STANDING = 257;
-const int FLAG_ONGROUND = 263;
-const int JUMP_PRESS = 6;
+const uint32_t FLAG_STANDING = 257;
+const uint32_t FLAG_ONGROUND = 263;
+const uint32_t JUMP_PRESS = 6;
 
 void Bunnyhop(uintptr_t client, uintptr_t localPlayer)
 {
 	if (GetAsyncKeyState(VK_SPACE))
 	{
-		int flag = *reinterpret_cast<std::uint32_t*>(localPlayer + offset::m_fFlags);
+		uint32_t flag = *reinterpret_cast<std::uint32_t*>(localPlayer + offset::m_fFlags);
 
 		if (flag == FLAG_STANDING || flag == FLAG_ONGROUND)
 		{
@@ -77,9 +77,9 @@ a check is performed to ensure the entity is on the opposing team. Then, an atta
 by setting `m_dwForceAttack` to 5. After a delay, this variable needs to be set back to
 its default value of 4, or only 1 shot will be fired.
 ```
-const int MAX_PLAYERS = 64;
-const int ATTACK_PRESS = 5;
-const int ATTACK_RELEASE = 4;
+const uint32_t MAX_PLAYERS = 64;
+const uint32_t ATTACK_PRESS = 5;
+const uint32_t ATTACK_RELEASE = 4;
 
 void Triggerbot(uintptr_t client, uintptr_t localPlayer)
 {
@@ -151,8 +151,9 @@ for this trainer. Note that the offsets for `CBasePlayer` are located on `client
 | --------------- | --------------- | -------------------- |
 | 0x00D0          | Int32           | m_iHealth            |
 | 0x00D8          | Int32           | m_iTeamNum           |
-| 0x0320          | Float32         | m_vecOrigin          |
+| 0x0320          | Float32[3]      | m_vecOrigin          |
 | 0x0440          | Float32         | m_fFlags             |
+| 0x127C          | Float32[3]      | m_vecPunchAngle      |
 | 0x1A54          | Float32         | m_flFlashMaxAlpha    |
 | 0x1A4C          | Float32         | m_flFlashMaxDuration |
 | 0x1B20	      | Int32	        | m_iCrosshairId	   |
