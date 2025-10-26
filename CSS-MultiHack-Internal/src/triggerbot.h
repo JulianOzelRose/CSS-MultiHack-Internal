@@ -4,9 +4,9 @@
 
 namespace triggerbot
 {
-	const int MAX_PLAYERS = 64;
-	const int ATTACK_PRESS = 5;
-	const int ATTACK_RELEASE = 4;
+	const uint32_t MAX_PLAYERS = 64;
+	const uint32_t ATTACK_PRESS = 5;
+	const uint32_t ATTACK_RELEASE = 4;
 
 	void Triggerbot(uintptr_t client, uintptr_t localPlayer)
 	{

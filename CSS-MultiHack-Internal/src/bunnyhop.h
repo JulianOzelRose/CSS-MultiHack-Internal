@@ -5,15 +5,15 @@
 
 namespace bunnyhop
 {
-	const int FLAG_STANDING = 257;
-	const int FLAG_ONGROUND = 263;
-	const int JUMP_PRESS = 6;
+	const uint32_t FLAG_STANDING = 257;
+	const uint32_t FLAG_ONGROUND = 263;
+	const uint32_t JUMP_PRESS = 6;
 
 	void Bunnyhop(uintptr_t client, uintptr_t localPlayer)
 	{
 		if (GetAsyncKeyState(VK_SPACE))
 		{
-			int flag = *reinterpret_cast<std::uint32_t*>(localPlayer + offset::m_fFlags);
+			uint32_t flag = *reinterpret_cast<std::uint32_t*>(localPlayer + offset::m_fFlags);
 
 			if (flag == FLAG_STANDING || flag == FLAG_ONGROUND)
 			{

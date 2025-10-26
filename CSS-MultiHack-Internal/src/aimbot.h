@@ -12,8 +12,8 @@ namespace aimbot
 {
 	struct MyPlayer_t
 	{
-		int Team;
-		int Health;
+		uint32_t Team;
+		uint32_t Health;
 		float Position[3];
 
 		void ReadInformation(uintptr_t engine, uintptr_t client, uintptr_t localPlayer)
@@ -57,8 +57,8 @@ namespace aimbot
 	struct PlayerList_t
 	{
 		uintptr_t CBaseEntity;
-		int Team;
-		int Health;
+		uint32_t Team;
+		uint32_t Health;
 		float Position[3];
 		float AimbotAngle[3];
 
@@ -104,7 +104,7 @@ namespace aimbot
 
 	void Aimbot(uintptr_t engine, uintptr_t client)
 	{
-		int numPlayers = *reinterpret_cast<std::uint32_t*>(engine + offset::m_iNumPlayers);
+		uint32_t numPlayers = *reinterpret_cast<std::uint32_t*>(engine + offset::m_iNumPlayers);
 
 		TargetList_t* TargetList = new TargetList_t[numPlayers];
 
