@@ -5,10 +5,16 @@ so you will need to use a DLL injector. For more details on installation and use
 scroll down to the section below. Later on this README are some
 details about reversing the game as well as offset tables.
 
+### ✨ Features
+- 🎯 Aimbot
+- 🐇 Bunnyhop Hack
+- 🔫 Triggerbot
+- 🚫 Anti-Flash
+
 ![MultiHack-Menu](https://github.com/JulianOzelRose/CSS-MultiHack-Internal/assets/95890436/4e31f08a-dab9-4977-b2ff-b7e8396da1eb)
 
 
-## Installation and use
+## 🛠️ Installation and Use
 To download this hack, navigate to the [Releases](https://github.com/JulianOzelRose/CSS-MultiHack-Internal/releases)
 page, then download the latest version of the DLL. You will then need to use a DLL injector.
 I recommend using [this one](https://guidedhacking.com/resources/guided-hacking-dll-injector.4/).
@@ -17,18 +23,18 @@ then press `Inject`. The multihack should then be running with the menu visible.
 features on or off. To run the aimbot, press the `V` key. To hide the menu, press the `INSERT` Key.
 To unload the hack, press the `END` key on your numpad.
 
-## Warning
+## ⚠️ Warning
 This program reads and modifies memory internally. If you use it on a VAC-secured server,
 you will be banned. To prevent this, be sure to add the `-insecure` flag to your
 game's launch options. You can find this menu by right-clicking on your game from Steam,
 then going to Properties. You can then safely play against bots without worrying
 about catching a VAC ban.
 
-## Demonstration
+## 🎬 Demonstration
 https://github.com/JulianOzelRose/CSS-MultiHack-Internal/assets/95890436/4f6940c2-bb24-451f-8c8a-2f06362440b4
 
 
-## Bunnyhop
+## 🐇 Bunnyhop Hack
 The bunnyhop hack is relatively straightforward. It works by first checking for ground flags. If the player
 is on the ground or crouching, it forces a jump by setting `m_dwForceJump` to 6. When in the air,
 the force jump variable resets. The result is perfectly timed jumps every time.
@@ -52,7 +58,7 @@ void Bunnyhop(uintptr_t client, uintptr_t localPlayer)
 }
 ```
 
-## Anti-flash
+## 🚫 Anti-Flash
 For anti-flash, there are 2 relevant variables; `m_flFlashMaxAlpha`
 determines how bright the flashbang's blinding effect is, and `m_flFlashMaxDuration` determines
 how long the flashbang's effect lasts. Just setting `m_flFlashMaxAlpha` to 0 is sufficient to nullify the flashbang's blinding effect.
@@ -68,7 +74,7 @@ void AntiFlash(uintptr_t localPlayer)
 }
 ```
 
-## Triggerbot
+## 🔫 Triggerbot
 The triggerbot uses `m_iCrosshairId` to determine what entity is in the player's
 crosshairs. A value of 0 means no entity. A non-zero value could mean another player,
 or it could mean a physics object. To prevent the triggerbot from firing at physics objects, the
@@ -114,7 +120,7 @@ void Triggerbot(uintptr_t client, uintptr_t localPlayer)
 }
 ```
 
-## Aimbot
+## 🎯 Aimbot
 The aimbot works by first iterating through the entity list. Each entity is 0x20 bytes apart,
 so you must use 0x20 as the iterator. Then, the aimbot checks to ensure that the entity
 is on the opposing team and is alive. Lastly, it performs calculations using trigonometry
@@ -140,7 +146,7 @@ void CalcAngle(float* src, float* dst, float* angles)
 }
 ```
 
-## Offset tables
+## 🧩 Offset Tables
 Unfortunately, there is no offset dumper for CS:S that I am aware of. However, it
 is possible to configure [hazedumper](https://github.com/frk1/hazedumper) with CS:S
 offset signatures and get it to dump offsets that way. Below are the offsets I used
@@ -172,7 +178,7 @@ for this trainer. Note that the offsets for `CBasePlayer` are located on `client
 | 0x53E4E4        | Float32[3]      | m_angRotation        |
 | 0x6DA960        | Int32           | m_iNumPlayers        |
 
-## Sources
+## 🌐 Sources
 I used the following sources to guide me through the creation of this trainer. The
 tutorials for hooking DirectX and getting the aimbot working were instrumental. I recommend
 checking them out for more in-depth explanations of the processes involved.
