@@ -40,17 +40,16 @@ is on the ground or crouching, it forces a jump by setting `m_dwForceJump` to 6.
 the force jump variable resets. The result is perfectly timed jumps every time.
 
 ```
-const uint32_t FLAG_STANDING = 257;
-const uint32_t FLAG_ONGROUND = 263;
-const uint32_t JUMP_PRESS = 6;
+constexpr uint32_t FL_ONGROUND = (1 << 0);
+constexpr uint32_t JUMP_PRESS = 6;
 
 void Bunnyhop(uintptr_t client, uintptr_t localPlayer)
 {
 	if (GetAsyncKeyState(VK_SPACE))
 	{
-		uint32_t flag = *reinterpret_cast<std::uint32_t*>(localPlayer + offset::m_fFlags);
+		const uint32_t flags = *reinterpret_cast<std::uint32_t*>(localPlayer + offset::m_fFlags);
 
-		if (flag == FLAG_STANDING || flag == FLAG_ONGROUND)
+		if (flags & FL_ONGROUND)
 		{
 			*reinterpret_cast<uint32_t*>(client + offset::m_dwForceJump) = JUMP_PRESS;
 		}
@@ -130,8 +129,8 @@ closest enemy's head. Credit goes to [Guided Hacking](https://guidedhacking.com/
 void CalcAngle(float* src, float* dst, float* angles)
 {
 	float delta[3] = { static_cast<float>(src[0] - dst[0]),
-                           static_cast<float>(src[1] - dst[1]),
-                           static_cast<float>(src[2] - dst[2]) };
+					   static_cast<float>(src[1] - dst[1]),
+					   static_cast<float>(src[2] - dst[2]) };
 
 	float hyp = sqrt(delta[0] * delta[0] + delta[1] * delta[1]);
 
@@ -167,16 +166,16 @@ for this trainer. Note that the offsets for `CBasePlayer` are located on `client
 ###                client.dll                            ###
 | Offset          | Type            | Variable             |
 | --------------- | --------------- | -------------------- |
-| 0x5F4B68        | Pointer         | m_dwLocalPlayer      |
-| 0x6098C8        | Pointer         | m_dwEntityList       |
-| 0x677300        | DWORD           | m_dwForceJump        |
-| 0x677310        | DWORD           | m_dwForceAttack      |
+| 0x5F3B98        | Pointer         | m_dwLocalPlayer      |
+| 0x6088F8        | Pointer         | m_dwEntityList       |
+| 0x675DE0        | DWORD           | m_dwForceJump        |
+| 0x675DF0        | DWORD           | m_dwForceAttack      |
 
 ###               engine.dll                             ###
 | Offset          | Type            | Variable             |
 | --------------- | --------------- | -------------------- |
-| 0x53E4E4        | Float32[3]      | m_angRotation        |
-| 0x6DA960        | Int32           | m_iNumPlayers        |
+| 0x53F4E4        | Float32[3]      | m_angRotation        |
+| 0x6DB960        | Int32           | m_iNumPlayers        |
 
 ## 🌐 Sources
 I used the following sources to guide me through the creation of this trainer. The
