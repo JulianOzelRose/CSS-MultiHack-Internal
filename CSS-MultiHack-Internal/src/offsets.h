@@ -5,10 +5,10 @@
 namespace offset
 {
     // client.dll
-    constexpr std::ptrdiff_t m_dwLocalPlayer = 0x5F3B98;
-    constexpr std::ptrdiff_t m_dwEntityList = 0x6088F8;
-    constexpr std::ptrdiff_t m_dwForceAttack = 0x675DF0;
-    constexpr std::ptrdiff_t m_dwForceJump = 0x675DE0;
+    constexpr std::ptrdiff_t m_dwLocalPlayer = 0x5F4B98;
+    constexpr std::ptrdiff_t m_dwEntityList = 0x6098F8;
+    constexpr std::ptrdiff_t m_dwForceAttack = 0x676DF0;
+    constexpr std::ptrdiff_t m_dwForceJump = 0x676DE0;
 
     // engine.dll
     constexpr std::ptrdiff_t m_angRotation = 0x53F4E4;
