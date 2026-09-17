@@ -159,22 +159,21 @@ for this trainer. Note that the offsets for `CBasePlayer` are located on `client
 | 0x0320          | Float32[3]      | m_vecOrigin          |
 | 0x0440          | Int32           | m_fFlags             |
 | 0x127C          | Float32[3]      | m_vecPunchAngle      |
-| 0x1A54          | Float32         | m_flFlashMaxAlpha    |
 | 0x1A4C          | Float32         | m_flFlashMaxDuration |
-| 0x1B20	      | Int32	        | m_iCrosshairId	   |
+| 0x1A54          | Float32         | m_flFlashMaxAlpha    |
+| 0x1B20          | Int32           | m_iCrosshairId       |
 
 ###                client.dll                            ###
 | Offset          | Type            | Variable             |
 | --------------- | --------------- | -------------------- |
-| 0x5F3B98        | Pointer         | m_dwLocalPlayer      |
-| 0x6088F8        | Pointer         | m_dwEntityList       |
-| 0x675DE0        | DWORD           | m_dwForceJump        |
-| 0x675DF0        | DWORD           | m_dwForceAttack      |
+| 0x5F4B98        | Pointer         | m_dwLocalPlayer      |
+| 0x6098F8        | Pointer         | m_dwEntityList       |
+| 0x676DE0        | DWORD           | m_dwForceJump        |
+| 0x676DF0        | DWORD           | m_dwForceAttack      |
 
 ###               engine.dll                             ###
 | Offset          | Type            | Variable             |
 | --------------- | --------------- | -------------------- |
-| 0x53F4E4        | Float32[3]      | m_angRotation        |
 | 0x6DB960        | Int32           | m_iNumPlayers        |
 
 ## 🌐 Sources
